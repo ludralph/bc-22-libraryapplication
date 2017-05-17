@@ -1,22 +1,87 @@
+'using strict';
+// including app dependencies
 const express  = require('express');
-const app = express();
+const session = require('express-session');
+const passport = require('passport');
+const expressValidator = require('express-validator');
+const LocalStrategy = require('passport-local').Strategy;
+const multer  = require('multer');
+const uploads = multer({dest:'./uploads'});
+const flash  = require('connect-flash');
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser');
+// end of app dependencies
+
 //Set up mongoose connection
 const mongoose = require('mongoose');
-const dbUrl = "mongodb://ludralph:presh1986@ds143141.mlab.com:43141/library_app";
-const mongoDB = dbUrl;
-mongoose.connect(mongoDB);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+//const mongodb = require('mongodb');
+const username = "ludralph";
+const password = "presh1986";
+const address = '@ds143141.mlab.com:43141/library_app'
+// Connect to mongo
+
+const url = 'mongodb://' + username + ':' + password + address;
+mongoose.connect(url);
+
+//routes
+const routes = require('./routes/index');
+const user = require('./routes/users');
+
+// init app
+const app = express();
 
 //define static file to use
 app.use(express.static("public"));
+
+// define view engine to use
 app.set("view engine", "ejs");
 
+//bodyparser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extend:false}));
+app.use(cookieParser());
 
+//session handling
+app.use(session({
+  secret:'secret',
+  saveUninitialized:true,
+  resave:true
+}));
 
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
+//validation
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
 
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
+
+// middleware messages
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+
+app.use('/',routes);
+app.use('/users',user);
 
 app.listen(3000,()=>{
-  console.log("libray server running");
-})
+  console.log("library server running");
+});
+
+module.exports = app;
