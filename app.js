@@ -14,14 +14,12 @@ const bodyParser = require('body-parser');
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
-//const mongodb = require('mongodb');
-const username = "ludralph";
-const password = "presh1986";
-const address = '@ds143141.mlab.com:43141/library_app'
-// Connect to mongo
 
-const url = 'mongodb://' + username + ':' + password + address;
-mongoose.connect(url);
+var configDB = require('./config/database.js');
+
+// configuration ===============================================================
+mongoose.connect(configDB.url); // connect to our database
+
 
 //routes
 const routes = require('./routes/index');
