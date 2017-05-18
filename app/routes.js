@@ -1,13 +1,46 @@
 module.exports = function(app, passport) {
+  // // Require controller modules
+  // var book_controller = require('../controller/bookController');
+  // var genre_controller = require('../controller/categoryController');
+  // var book_instance_controller = require('../controller/bookinstanceController');
 
 // normal routes ===============================================================
 
     // show the home page (will also have our login links)
-    app.get('/', function(req, res) {
+    app.get('/',function(req, res) {
         res.render('index.ejs');
     });
 
-    // PROFILE SECTION =========================
+    app.get('/catalog', isLoggedIn, function(req, res){
+      res.render('catalog.ejs');
+    });
+
+    /* GET request for list of all Book items. */
+    //app.get('/books', isLoggedIn);
+// normal routes end
+
+//admin routes
+// GET request for creating a Book. NOTE This must come before routes that display Book (uses id) */
+// app.get('/book/create', book_controller.book_create_get);
+//
+// /* POST request for creating Book. */
+// app.post('/book/create', book_controller.book_create_post);
+//
+// /* GET request to delete Book. */
+// app.get('/book/:id/delete', book_controller.book_delete_get);
+//
+// // POST request to delete Book
+// app.post('/book/:id/delete', book_controller.book_delete_post);
+//
+// /* GET request to update Book. */
+// app.get('/book/:id/update', book_controller.book_update_get);
+//
+// // POST request to update Book
+// app.post('/book/:id/update', book_controller.book_update_post);
+
+// end of admin routes
+
+  // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile.ejs', {
             user : req.user
@@ -33,7 +66,7 @@ module.exports = function(app, passport) {
 
         // process the login form
         app.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/profile', // redirect to the secure profile section
+            successRedirect : '/catalog', // redirect to the homepage
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
@@ -46,14 +79,14 @@ module.exports = function(app, passport) {
 
         // process the signup form
         app.post('/register', passport.authenticate('local-signup', {
-            successRedirect : '/profile', // redirect to the secure profile section
+            successRedirect : '/login', // redirect to the secure profile section
             failureRedirect : '/signup', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
 
 
 // =============================================================================
-// AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
+// AUTHORIZE (ALREADY LOGGED IN=============
 // =============================================================================
 
     // locally --------------------------------
@@ -91,4 +124,6 @@ function isLoggedIn(req, res, next) {
 
     res.redirect('/');
 }
+
+
 };

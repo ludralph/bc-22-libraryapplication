@@ -1,12 +1,10 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const AuthorSchema = Schema(
   {
     firstName: {type: String, required: true, max: 100},
     lastName: {type: String, required: true, max: 100},
-    dateOfBirth: {type: Date}
-
   }
 );
 
@@ -25,4 +23,4 @@ AuthorSchema
 });
 
 //Export model
-export default mongoose.model('Author', AuthorSchema);
+module.exports =  mongoose.model('Author', AuthorSchema);

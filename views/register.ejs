@@ -1,18 +1,19 @@
 <% include partials/header %>
-  <div class="container top-margin">
+  <div class="container">
     <div class="row">
-
-      <div class="col">
-      </div>
 
       <div class="col">
         <!-- show any messages that come back with authentication -->
          <% if (message.length > 0) { %>
-           <div class="alert alert-danger">
+           <div class="">
              <%= message %>
            </div>
          <% } %>
-        <form class="" action="/users/register" method="post" enctype="multipart/form-data">
+      </div>
+
+      <div class="col top-margin">
+
+        <form class="" action="/register" method="post">
 
           <!--Form with header-->
           <div class="card">
@@ -25,25 +26,25 @@
 
               <!--Body-->
               <div class="md-form">
-                <i class="fa fa-user prefix"></i>
-                <input type="text" id="form3" class="form-control" name="name" placeholder="Enter your name" required>
+                <!-- <i class="fa fa-user prefix"></i>
+                <input type="text" id="form7" class="form-control" name="name" placeholder="Enter your name" required> -->
 
               </div>
               <div class="md-form">
                 <i class="fa fa-envelope prefix"></i>
-                <input type="email" id="form2" class="form-control" name="email" placeholder="Enter your email " required>
+                <input type="email" id="form1" class="form-control" name="email" placeholder="Enter your email " required>
 
               </div>
 
               <div class="md-form">
                 <i class="fa fa-lock prefix"></i>
-                <input type="password" id="form4" class="form-control" name="password"
+                <input type="password" id="form2" class="form-control" name="password"
                      placeholder="Enter password" required>
 
               </div>
 
               <div class="text-center">
-                <button class="btn btn-indigo" name="submit">Sign up</button>
+                <button class="btn btn-indigo">Sign up</button>
               </div>
 
             </div>

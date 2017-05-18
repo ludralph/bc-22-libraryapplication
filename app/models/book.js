@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -12,11 +12,7 @@ const BookSchema = Schema({
     ref: 'Author',
     required: true
   },
-  summary: {
-    type: String,
-    required: true
-  },
-  isbn: {
+    imageUrl: {
     type: String,
     required: true
   },
@@ -31,4 +27,4 @@ BookSchema
 });
 
 //Export model
-export default mongoose.model('Book', BookSchema);
+module.exports = mongoose.model('Book', BookSchema);

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -17,4 +17,4 @@ BookInstanceSchema
 });
 
 //Export model
-export default mongoose.model('BookInstance', BookInstanceSchema);
+module.exports =  mongoose.model('BookInstance', BookInstanceSchema);
