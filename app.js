@@ -1,7 +1,7 @@
 'using strict';
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 3000;
+var port     = process.env.PORT || 5000;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -42,7 +42,7 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 // launch ======================================================================
 app.listen(port, function(){
-  console.log('The server is running on ' + port);
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
 
 
