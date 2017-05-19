@@ -15,28 +15,17 @@ module.exports = function(app, passport) {
       res.render('catalog.ejs');
     });
 
-    /* GET request for list of all Book items. */
-    //app.get('/books', isLoggedIn);
-// normal routes end
+ // admin routes
+ app.get('/admin', function(req,res){
+    res.render('login.ejs',{message: req.flash('loginMessage')});
+ }) ;
 
-//admin routes
-// GET request for creating a Book. NOTE This must come before routes that display Book (uses id) */
-// app.get('/book/create', book_controller.book_create_get);
-//
-// /* POST request for creating Book. */
-// app.post('/book/create', book_controller.book_create_post);
-//
-// /* GET request to delete Book. */
-// app.get('/book/:id/delete', book_controller.book_delete_get);
-//
-// // POST request to delete Book
-// app.post('/book/:id/delete', book_controller.book_delete_post);
-//
-// /* GET request to update Book. */
-// app.get('/book/:id/update', book_controller.book_update_get);
-//
-// // POST request to update Book
-// app.post('/book/:id/update', book_controller.book_update_post);
+ // process the admin login form
+ app.post('/admin', passport.authenticate('local-login', {
+     successRedirect : '/admin', // redirect to the admin page
+     failureRedirect : '/login', // redirect back to the signup page if there is an error
+     failureFlash : true // allow flash messages
+ }));
 
 // end of admin routes
 
